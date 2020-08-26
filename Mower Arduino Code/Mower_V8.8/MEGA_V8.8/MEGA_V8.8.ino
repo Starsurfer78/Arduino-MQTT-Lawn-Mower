@@ -45,8 +45,7 @@ DFRobot_QMC5883 compass;
 #include <QMC5883L.h>
 QMC5883L compass2;
 
-//Pin setup for Arduino MEGA
-
+// ------ Pin Setup for Arduino Mega (Changes only without PCB!) ---------------------------------------
 //Perimeter Wire Pins
 #define pinPerimeterLeft A5        // perimeter pin normally A5
 #define pinPerimeterRight A4       // leave open
@@ -109,6 +108,12 @@ DS1302 rtc(kCePin, kIoPin, kSclkPin);
 // Tilt Sensors
 #define Tilt_Angle A8           // measures the angle of the mower
 #define Tilt_Orientation A9     // measures if the mower is upside down
+
+// ------- Baudrates Nano/Nodemcu/TFT-Mega---------------------------------
+#define CONSOLE_BAUDRATE    115200      // Baudrate for output console
+#define NODEMCU_BAUDRATE    9600        // Baudrate used for communication with Nodemcu
+#define TFTMEGA_BAUDRATE    9600        // Baudrate used for communication with TFT-MEGA
+#define NANO_BAUDRATE    9600           // Baudrate used for communication with NANO
 
 // Convert normal decimal numbers to binary coded decimal
 byte decToBcd(byte val)
@@ -561,10 +566,10 @@ bool Show_TX_Data                   = 0;                      // Show the values
 
 
 void setup() {
-  Serial.begin(115200);
-  Serial1.begin(1200);									                  // Open Serial port 1 for the nano communication
-  if (WIFI_Enabled == true) Serial2.begin(9600);					// If WIFI is on open Serial port 2 for the NodeMCU communication
-  if (TFT_Screen_Menu == 1) Serial3.begin(9600);          // 1200 before
+  Serial.begin(CONSOLE_BAUDRATE);
+  Serial1.begin(NANO_BAUDRATE);									                  // Open Serial port 1 for the nano communication
+  if (WIFI_Enabled == true) Serial2.begin(NODEMCU_BAUDRATE);					// If WIFI is on open Serial port 2 for the NodeMCU communication
+  if (TFT_Screen_Menu == 1) Serial3.begin(TFTMEGA_BAUDRATE);          // 1200 before
   Wire.begin();                                           // start the i2c interface
   DPRINTLN(" ");
   DPRINTLN(" ");
