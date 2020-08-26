@@ -1,6 +1,20 @@
-ReP_AL-3D-Lawn-Mower
-Code and Files for the ReP_AL 3D Printed Lawn Mower
----------------------------------------------------
+ReP_AL
+
+This is a customization of project: [ReP_AL-3D-Lawn-Mower](https://github.com/REPALphilread/ReP_AL-3D-Lawn-Mower)
+
+Webside with descriptions and Online Shop to buy Components: [ReP_AL Maker Shop](https://repalmakershop.com/)
+
+This Projec is based on the: **Mower_V8.8 Code**
+
+**!! All my work falls under the GNU Public License !!**
+
+**Project Customization**
+
+This project adds some customization to ReP_AL-3D-Lawn-Mower:
+- Enable/Disable Debug Messages
+- Remove LCD Code (in Progress)
+- MQTT Support for Home Automation System (in Progess)
+- 24V Support (in Progess)
 
 
 Arduino Code
@@ -10,12 +24,7 @@ Upload the MEGA code to the Arduino MEGA
 Upload the Nano code to the Arduino Nano
 Upload the NodeMCU code to the NodeMCU Board   (includes new code)
 Upload the TFT Code to the TFT MEGA Shield
-Upload the ESP32_Rover Code to the ESP32 Board (GPS)
 Upload the BMP Files to the TFT SD Card
-
-
-(I needed to use the "old bootloader" option in the Arduino IDE to get the sketch to upload to the NANO)
-Perimeter Wire - Sender_station_V1 needs to be uploaded to the Arduino in the perimeter wire transmitter.
 
 
 Libraries
