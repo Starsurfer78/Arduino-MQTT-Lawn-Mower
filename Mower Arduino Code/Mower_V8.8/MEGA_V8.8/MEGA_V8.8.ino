@@ -621,40 +621,58 @@ void loop() {
 
 
   // Mower is docked, docking station is enabled and waiting for a command to leave and mow.
-  if ((Mower_Docked == 1) && (LCD_Screen_Keypad_Menu == 1))         Print_LCD_Volt_Info();                                  // Print the voltage to the LCD screen
-  if  (Mower_Docked == 1)                                           Check_if_Charging();
-  if ((Mower_Docked == 1) && (LCD_Screen_Keypad_Menu == 1))         Print_LCD_Info_Docked();                                // Print information to the LCD screen
-  if ((Mower_Docked == 1) && (LCD_Screen_Keypad_Menu == 1))         Print_Time_On_LCD();
-  if ((Mower_Docked == 1) && (LCD_Screen_Keypad_Menu == 1))         Check_Membrane_Switch_Input_Docked();                   // Check the membrane buttons for any input
-  if ((Mower_Docked == 1) && (GPS_Enabled == 1))                    Check_GPS_In_Out();                                     // Get the GPS Signal In / Out of Fence
-  if (Mower_Docked == 1)                                            TestforBoundaryWire();                                  // Test is the boundary wire is live
-  if (Mower_Docked == 1)                                            Manouver_Dock_The_Mower();
-  if (Mower_Docked == 1)                                            Print_Time_On_Serial_Monitor();
-  if (Mower_Docked == 1)                                            Display_Next_Alarm();
-  if (Mower_Docked == 1)                                            Activate_Alarms();
-  if ((Mower_Docked == 1) && (TFT_Screen_Menu == 1))                Send_Mower_Docked_Data();                               // Send Data to TFT Display
+  if ((Mower_Docked == 1) && (LCD_Screen_Keypad_Menu == 1)) {
+  Print_LCD_Volt_Info();                                  // Print the voltage to the LCD screen
+  Print_LCD_Info_Docked();                                // Print information to the LCD screen
+  Print_Time_On_LCD();
+  Check_Membrane_Switch_Input_Docked();                   // Check the membrane buttons for any input
+  }
 
+  if ((Mower_Docked == 1) && (GPS_Enabled == 1))                    Check_GPS_In_Out();                                     // Get the GPS Signal In / Out of Fence
+
+  if (Mower_Docked == 1) {
+  Check_if_Charging();
+  TestforBoundaryWire();                                  // Test is the boundary wire is live
+  Manouver_Dock_The_Mower();
+  Print_Time_On_Serial_Monitor();
+  Display_Next_Alarm();
+  Activate_Alarms();
+  }
+
+  if ((Mower_Docked == 1) && (TFT_Screen_Menu == 1))                Send_Mower_Docked_Data();
 
   // Mower is Parked ready to be started / re-started / or the mower has no docking station enabled.
-  if ((Mower_Parked == 1) && (LCD_Screen_Keypad_Menu == 1))         Print_LCD_Volt_Info();                                  // Print the voltage to the LCD screen
-  if (Mower_Parked == 1)                                            Check_if_Charging();
-  if (Mower_Parked == 1)                                            Check_if_Raining_From_Nano ();                          // Checks if the water sensor detects Rain
-  if ((Mower_Parked == 1) && (LCD_Screen_Keypad_Menu == 1))         Print_LCD_Info_Parked();                                // Print information to the LCD screen
-  if ((Mower_Parked == 1) && (LCD_Screen_Keypad_Menu == 1))         Check_Membrane_Switch_Input_Parked();                   // Check the membrane buttons for any input
+  if ((Mower_Parked == 1) && (LCD_Screen_Keypad_Menu == 1)) {
+  Print_LCD_Volt_Info();
+  Print_LCD_Info_Parked();    // Print the voltage to the LCD screen
+  Check_Membrane_Switch_Input_Parked();   // Check the membrane buttons for any input
+  }
+
+  if (Mower_Parked == 1) {
+  Check_if_Charging();
+  Check_if_Raining_From_Nano ();    // Checks if the water sensor detects Rain
+  TestforBoundaryWire();
+  Manouver_Park_The_Mower();
+  }
+
   if ((Mower_Parked == 1) && (GPS_Enabled == 1))                    Check_GPS_In_Out();
-  if (Mower_Parked == 1)                                            TestforBoundaryWire();
-  if (Mower_Parked == 1)                                            Manouver_Park_The_Mower();
+
   if ((Mower_Parked == 1) && (TFT_Screen_Menu == 1))                Send_Mower_Docked_Data();                               // Send Data to TFT Display
 
 
   // Mower is Parked with Low Battery needing manuel charging
-  if ((Mower_Parked_Low_Batt == 1) && (LCD_Screen_Keypad_Menu == 1)) Print_LCD_Volt_Info();                                  // Print the battery voltage
-  if ((Mower_Parked_Low_Batt == 1) && (LCD_Screen_Keypad_Menu == 1)) Print_Recharge_LCD();                                   // Print re-charge on the LCD screen
-  if ((Mower_Parked_Low_Batt == 1) && (LCD_Screen_Keypad_Menu == 1)) Check_Membrane_Switch_Input_Parked();
+  if ((Mower_Parked_Low_Batt == 1) && (LCD_Screen_Keypad_Menu == 1)) {
+  Print_LCD_Volt_Info();
+  Print_Recharge_LCD();     // Print re-charge on the LCD screen// Print the battery voltage
+  Check_Membrane_Switch_Input_Parked();
   // Lost mower is put into standby mode
+  }
 
-  if ((Mower_Error == 1)  && (LCD_Screen_Keypad_Menu == 1))         Print_Mower_Error();                     // Safety mode incase the mower is lostor in an error state
-  if ((Mower_Error == 1)  && (LCD_Screen_Keypad_Menu == 1))         Check_Membrane_Switch_Input_Parked();
+  if ((Mower_Error == 1)  && (LCD_Screen_Keypad_Menu == 1)) {
+  Print_Mower_Error();                     // Safety mode incase the mower is lostor in an error state
+  Check_Membrane_Switch_Input_Parked();
+  }
+  
   if ((Mower_Error == 1)  && (TFT_Screen_Menu == 1))                Send_Mower_Error_Data();                               // Send Data to TFT Display
 
 
