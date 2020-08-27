@@ -1,6 +1,5 @@
 /* Code based on https://github.com/comperta/ReP_AL-3D-Lawn-Mower/blob/MQTT/Mower%20Arduino%20Code/Mower_V8.3/NODEMCU_V8.3/config.h */
 
-#define DEBUG
 //choose beetwen Blynk or MQTT
 //const char* app = "Blynk";
 const char* app = "MQTT";

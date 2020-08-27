@@ -5,7 +5,7 @@
 // Instructions on how to do this are available on my webpage
 // www.repalmakershop.com
 
-//#define DEBUG  // Comment to disable debug serial output.
+#define DEBUG  // Comment to disable debug serial output.
 #ifdef DEBUG
 #define DPRINT(...)    Serial.print(__VA_ARGS__)
 #define DPRINTLN(...)  Serial.println(__VA_ARGS__)
@@ -17,7 +17,6 @@
 //Libraries for Perimeter Wire Receiver
 #include <Arduino.h>
 #include <Wire.h>
-//#include <EEPROM.h>
 #include "drivers.h"
 #include "adcman.h"
 #include "perimeter.h"

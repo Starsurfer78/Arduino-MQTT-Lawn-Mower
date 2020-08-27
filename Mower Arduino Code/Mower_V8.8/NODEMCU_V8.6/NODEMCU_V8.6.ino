@@ -1,12 +1,18 @@
-
-
 /* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 #include <SoftwareSerial.h>
 #include <PubSubClient.h> // for MQTT
 #include "config.h" //Config file for credentials
+
+#define DEBUG  // Comment to disable debug serial output.
+#ifdef DEBUG
+#define DPRINT(...)    Serial.print(__VA_ARGS__)
+#define DPRINTLN(...)  Serial.println(__VA_ARGS__)
+#else
+#define DPRINT(...)
+#define DPRINTLN(...)
+#endif
 
 SoftwareSerial NodeMCU(D2, D3);  //RXD2 TXD3
 
@@ -71,48 +77,39 @@ WidgetLCD lcd(V6);
 // that you define how often to send data to Blynk App.
 
 void myTimerEvent()  {
-  if (  (BatteryVoltage > 10) && (BatteryVoltage < 15) ) {
+  if ((BatteryVoltage > 10) && (BatteryVoltage < 15)) {
     Blynk.virtualWrite(V3, BatteryVoltage);
   }
-
   Blynk.virtualWrite(V5, Loop_Cycle_Mowing);
-
-
 }
 
-void setup()
-{
+
+void setup() {
   Serial.begin(9600);
   NodeMCU.begin(9600);
-  Serial.println();
-  Serial.println("debug mode on");
-  Serial.println("Setting up NODEMCU........");
-  Serial.println("");
+  DPRINTLN();
+  DPRINTLN("debug mode on");
+  DPRINTLN("Setting up NODEMCU........");
+  DPRINTLN("");
   pinMode(D2, INPUT);
   pinMode(D3, OUTPUT);
   digitalWrite(LED, HIGH);                          // Turn off LED Light
   WIFI_Connect();                                   // Connect to the WIFI
   if (app == "Blynk") Clear_APP(); //MQTT changes
-  lcd.clear();
+  if (app == "MQTT") Clear_MQTT(); //MQTT changes
+  //lcd.clear();
   pinMode(LED, OUTPUT);
-
-
 }
 
 
 //Functions
 //***********************************
-void WIFI_Connect()
-{
+void WIFI_Connect() {
   if (app == "Blink") {
     int mytimeout = millis() / 1000;
-#ifdef DEBUG
-    Serial.println();
-    Serial.println("*********************************************");
-#endif
+    DPRINTLN();
+    DPRINTLN("*********************************************");
     Blynk.begin(auth, SSID, PASSWORD);
-
-
     while (Blynk.connected() != WL_CONNECTED) {
       delay(500);
       if ((millis() / 1000) > mytimeout + 3) {                    // try for less than 4 seconds to connect to WiFi router
@@ -122,45 +119,30 @@ void WIFI_Connect()
 
     if (!Blynk.connected()) {
       digitalWrite(LED, HIGH);
-#ifdef DEBUG
-      Serial.println("NODEMCU Disconnected");
-      Serial.println("Reconnecting . . . . . . ");
-#endif
+      DPRINTLN("NODEMCU Disconnected");
+      DPRINTLN("Reconnecting . . . . . . ");
       WIFI_Connect();
-
-    }
-    else {
+    } else {
       digitalWrite(LED, LOW);
-#ifdef DEBUG
-      Serial.println("Connected. . . . . .");
-#endif
+      DPRINTLN("Connected. . . . . .");
       // Setup a function to be called every second
       timer.setInterval(1000L, myTimerEvent);
     }
-  }
-  else {
+  } else {
     delay(10);
     // We start by connecting to a WiFi network
-#ifdef DEBUG
-    Serial.println();
-    Serial.print("Connecting to ");
-    Serial.println(SSID);
-#endif
+    DPRINTLN();
+    DPRINT("Connecting to ");
+    DPRINTLN(SSID);
     WiFi.begin(SSID, PASSWORD);
-
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
-#ifdef DEBUG
-      Serial.print(".");
-#endif
+      DPRINT(".");
     }
-
-#ifdef DEBUG
-    Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
-#endif
+    DPRINTLN("");
+    DPRINTLN("WiFi connected");
+    DPRINTLN("IP address: ");
+    DPRINTLN(WiFi.localIP());
     client.setServer(MQTT_SERVER , 1883);
     client.setCallback(callback);
   }
@@ -176,11 +158,9 @@ void loop()  {
       Blynk.run();
       timer.run();
       digitalWrite(LED, HIGH);
-#ifdef DEBUG
-      Serial.println("------------------------");
-      Serial.println("NODEMCU Disconnected");
-      Serial.println("Reconnecting ... ");
-#endif
+      DPRINTLN("------------------------");
+      DPRINTLN("NODEMCU Disconnected");
+      DPRINTLN("Reconnecting ... ");
       WIFI_Connect() ;
     }
     else {
@@ -189,28 +169,22 @@ void loop()  {
       digitalWrite(LED, LOW);         //LED is inverted on a MODEMCU...
       Receive_All_From_MEGA();
       Update_Blynk_App_With_Status();
-#ifdef DEBUG
-      Serial.println("");     // new line serial monitor
-#endif
+      DPRINTLN("");     // new line serial monitor
     }
-  }
-  else {
+  } else {
     if (!client.connected()) {
       digitalWrite(LED, HIGH);
-#ifdef DEBUG
-      Serial.println("------------------------");
-      Serial.println("NODEMCU MQTT Disconnected");
-      Serial.println("Reconnecting ... ");
-#endif
+      DPRINTLN("------------------------");
+      DPRINTLN("NODEMCU MQTT Disconnected");
+      DPRINTLN("Reconnecting ... ");
       reconnect();
       Clear_MQTT();
-    }
-    else {
+    } else {
       client.loop();
       digitalWrite(LED, LOW);         //LED is inverted on a MODEMCU...
       Receive_All_From_MEGA();
       Update_MQTT_With_Status();
-      //Serial.println("");     // new line serial monitor
+      //DPRINTLN("");     // new line serial monitor
     }
   }
 
