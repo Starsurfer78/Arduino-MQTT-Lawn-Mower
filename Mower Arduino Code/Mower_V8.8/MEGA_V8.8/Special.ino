@@ -18,9 +18,6 @@ void Special_Move_Into_Garden_Zone_X() {
 }
 
 void Manouver_Exit_From_Docking_Station() {
-  lcd.clear();
-  lcd.print(F("Exiting Garage"));
-  delay(2000);
   SetPins_ToGoBackwards();                                        // Prepare motors pins to go Backwards
   Motor_Action_GoFullSpeed_Out_Garage();                          // Turn the wheels
   DPRINT(F("Left Wheel PWM:"));
@@ -59,10 +56,7 @@ void Manouver_Exit_From_Docking_Station() {
   }
   SetPins_ToGoForwards();                                         // Set to go wheel motor pins to go forwards
   Motor_Action_Stop_Motors();                                     // Stop / Park the mower here
-  lcd.clear();                                                    // Clears the LCD display
-  lcd.print("Garage Clear");                                      // Prints to the LCD screen
   delay(500);
-  lcd.clear();
 }
 
 
@@ -71,8 +65,6 @@ void Specials_Find_Wire_Track()  {
 
   DPRINTLN("");
   DPRINTLN(F("Lost Mower - find wire Track"));
-  lcd.clear();
-  lcd.print("Finding Wire...  ");
   Motor_Action_Stop_Spin_Blades();
   delay(5);
   Abort_Wire_Find = 0;
@@ -101,11 +93,6 @@ void Specials_Find_Wire_Track()  {
       Motor_Action_Stop_Motors();                                                           // Stop all wheel motion
       delay(1000);
       SetPins_ToGoBackwards();                                                              // Set the mower to back up
-      delay(100);
-      lcd.clear();
-      lcd.print("Backwards Try...  ");
-      lcd.setCursor(0, 1);
-      lcd.print("Finding Wire  ");
       delay(100);
 
       // While the mower is still outside the boundary wire run this code unless andabort signal from the APP comes or it runs out of tries.
@@ -138,12 +125,7 @@ void Specials_Find_Wire_Track()  {
     Motor_Action_Stop_Motors();
     delay(1000);
     SetPins_ToGoForwards();                                                             // Set the motors to move the mower forwards
-    delay(100);
-    lcd.clear();
-    lcd.print(F("Forward Try...  "));
-    lcd.setCursor(0, 1);
-    lcd.print(F("Finding Wire  "));
-    delay(100);                                                                  // resets the cycles
+    delay(100);                                                                 // resets the cycles
     while (( inside != false) && (Wire_Find_Attempt < 100)) {                               // Move the mower forward until mower is outisde/ON the wire fence or 500 cycles have passed
       Motor_Action_Go_Full_Speed();                                                     // Go full speed (in this case forwards)
       UpdateWireSensor();                                                               // Read the wire sensor and see of the mower is now  or outside the wire

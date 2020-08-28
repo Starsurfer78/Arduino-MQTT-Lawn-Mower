@@ -39,12 +39,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
   if (Blade_Override == 1) {
     Motor_Action_Spin_Blades();
   }
-  lcd.setCursor(0, 0);
-  lcd.print("Exit Docking to");                                             // into the garden at a good position to start Mowing
-  lcd.setCursor(2, 1);
-  if (Exit_Zone == 1) lcd.print("Zone 1");
-  if (Exit_Zone == 2) lcd.print("Zone 2");
-  delay(1000);                                           // Prints info to LCD display
 
   Tracking_Turn_Right = 0;                                // resets the tracking errors for LH and RH.
   Tracking_Turn_Left = 0;
@@ -65,8 +59,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
   delay(500);
   if (WIFI_Enabled == 1) Get_WIFI_Commands();
   delay(5);
-  lcd.setCursor(10, 1);
-  lcd.print("0");
   for (I = 0; I < Track_Wire_Itterations; I++) {                                              // Iterations 'I' before mower leaves the wire.
     if (Mower_Parked == 0) {
       delay(5);
@@ -88,8 +80,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
           if (PWM_Right > 255)  PWM_Right = 255;                              // PWM_Right capped to Max PWM of 255.
           if (PWM_Right >= 0) {
             SetPins_ToGoForwards();
-            lcd.setCursor(15, 1);
-            lcd.print(" ");
           }
 
 
@@ -98,8 +88,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
             if (PWM_Right > 255) PWM_Right = 255;
             if (PWM_Right >= 0) SetPins_ToTurnRight();
             delay(5);
-            lcd.setCursor(15, 1);
-            lcd.print(">");
           }
 
           Motor_Action_Dynamic_PWM_Steering();                                      // Carries out the wheel PWM changes for steering on the wire
@@ -108,11 +96,7 @@ void Track_Wire_From_Dock_to_Zone_X() {
           Tracking_Turn_Right = Tracking_Turn_Right + 1;                      // too many times it is assumed that the mower is spinning and cant get back on the wire.
           if (Tracking_Turn_Right > Max_Tracking_Turn_Right) {                // if this is detected then a function is ran to find the wire again.
             Motor_Action_Stop_Motors();
-            lcd.clear();
-            lcd.print("Right Wheel");
-            lcd.print("Tracking_Turn_Right");
             delay(2000);
-            lcd.clear();
             Tracking_Restart_Blocked_Path();
           }
 
@@ -124,8 +108,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
           if (PWM_Left > 255) PWM_Left = 255;                                 // PWM_Left capped to mex PWM of 255
           if (PWM_Left >= 0) {
             SetPins_ToGoForwards();
-            lcd.setCursor(0, 1);
-            lcd.print(" ");
           }
 
 
@@ -134,8 +116,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
             if (PWM_Left > 255) PWM_Left = 255;
             SetPins_ToTurnLeft();
             delay(5);
-            lcd.setCursor(0, 1);
-            lcd.print("<");
           }
 
           Motor_Action_Dynamic_PWM_Steering();
@@ -144,11 +124,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
           Tracking_Turn_Left = Tracking_Turn_Left + 1;
           if (Tracking_Turn_Left > Max_Tracking_Turn_Left) {
             Motor_Action_Stop_Motors();
-            lcd.clear();
-            lcd.print("Left Wheel");
-            lcd.print("Tracking_Turn_Left");
-            delay(2000);
-            lcd.clear();
             Tracking_Restart_Blocked_Path();
           }
         }
@@ -178,16 +153,12 @@ void Track_Wire_From_Dock_to_Zone_X() {
         if (PWM_Left > 255) PWM_Left = 255;                     //
         if (PWM_Left >= 0) {
           SetPins_ToGoForwards();                               // keep the mower moving forward
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
         if (PWM_Left < 0) {
           PWM_Left = (-1 * PWM_Left) + 220;
           if (PWM_Left > 255) PWM_Left = 255;
-          lcd.setCursor(15, 0);
-          lcd.print("*");
           SetPins_ToTurnLeft();
           delay(5);
         }
@@ -208,8 +179,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
         if (PWM_Right > 255) PWM_Right = 255;
         if (PWM_Right >= 0) {
           SetPins_ToGoForwards();
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
@@ -217,8 +186,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
           PWM_Right = (-1 * PWM_Right) + 220 ;
           if (PWM_Right > 255) PWM_Right = 255;
           if (PWM_Right >= 0) SetPins_ToTurnRight();
-          lcd.setCursor(15, 0);
-          lcd.print("*");
         }
 
         Motor_Action_Dynamic_PWM_Steering();
@@ -241,10 +208,7 @@ void Track_Wire_From_Dock_to_Zone_X() {
         Dock_Cycles = 0;
       }
     }
-    lcd.setCursor(10, 1);
-    lcd.print(I);
   }
-  lcd.clear();
   Tracking_Wire = 0;
   Loop_Cycle_Mowing = 0;
 
@@ -261,10 +225,6 @@ void Track_Wire_From_Dock_to_Zone_X() {
 
 
 void Track_Perimeter_Wire_To_Dock()  {
-  lcd.clear();
-  lcd.print("Tracking to..");
-  lcd.setCursor(0, 1);
-  lcd.print("Charging Station");                                            // Prints info to LCD display
   Motor_Action_Stop_Spin_Blades();
   Docked_Hits = 0;
   Check_if_Charging();                                                        // Checks if an amperage is detected on the charge wire
@@ -291,11 +251,6 @@ void Track_Perimeter_Wire_To_Dock()  {
   if (CCW_Tracking_To_Charge == 1)  {                                                   // Mower tracks the wire in a Counter Clockwise Direction
     DPRINTLN(F("TRACKING COUNTER-CLOCKWISE"));
     while ((Mower_Docked == 0) && (Mower_Parked == 0)) {
-      lcd.clear();
-      lcd.print("Tracking CCW to");
-      lcd.setCursor(0, 1);
-      lcd.print("Charging Station");                                            // Prints info to LCD display
-      delay(5);
       ADCMan.run();
       MAG_Start = perimeter.getMagnitude(0);                                    // Gets the signal strength of the sensor
       MAG_Now = MAG_Start;
@@ -311,8 +266,6 @@ void Track_Perimeter_Wire_To_Dock()  {
         if (PWM_Right > 255) PWM_Right = 255;                                   // Caps the PWM_Right to 255
         if (PWM_Right >= 0) {
           SetPins_ToGoForwards();
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
@@ -320,8 +273,6 @@ void Track_Perimeter_Wire_To_Dock()  {
           PWM_Right = (-1 * PWM_Right) + 220 ;                                  // change the negative value to a positive for the PWM input to the motor bridge.
           if (PWM_Right > 255) PWM_Right = 255;                                 // cap the maximum PWM to 255
           SetPins_ToTurnRight();                                                // set the motor bridge pins to turn left
-          lcd.setCursor(15, 0);
-          lcd.print("*");
         }
 
         Motor_Action_Dynamic_PWM_Steering();                                          // Carries out the wheel PWM changes for steering on the wire
@@ -340,8 +291,6 @@ void Track_Perimeter_Wire_To_Dock()  {
         if (PWM_Left > 255) PWM_Left = 255;                                     // cap PWM_Left to the maximum
         if (PWM_Left >= 0) {
           SetPins_ToGoForwards();
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
@@ -350,8 +299,6 @@ void Track_Perimeter_Wire_To_Dock()  {
           if (PWM_Left > 255) PWM_Left = 255;                                   // if again the PWM is above 255 then cap it to 255
           SetPins_ToTurnLeft();                                                 // set the pins to sharp turn left
           delay(5);
-          lcd.setCursor(15, 0);
-          lcd.print("*");
         }
 
         Motor_Action_Dynamic_PWM_Steering();
@@ -383,11 +330,6 @@ void Track_Perimeter_Wire_To_Dock()  {
   if (CW_Tracking_To_Charge == 1)  {                             // Mower tracks the wire in a Counter Clockwise Direction
     DPRINTLN(F("TRACKING ---  CLOCKWISE"));               // With the same functions as above
     while ((Mower_Docked == 0) && (Mower_Parked == 0)) {
-      delay(5);
-      lcd.clear();
-      lcd.print("Tracking CW to");
-      lcd.setCursor(0, 1);
-      lcd.print("Charging Station");                            // Prints info to LCD display
       ADCMan.run();
       MAG_Start = perimeter.getMagnitude(0);
       MAG_Now = MAG_Start;
@@ -405,16 +347,12 @@ void Track_Perimeter_Wire_To_Dock()  {
         if (PWM_Left > 255) PWM_Left = 255;                     //
         if (PWM_Left >= 0) {
           SetPins_ToGoForwards();                               // keep the mower moving forward
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
         if (PWM_Left < 0) {
           PWM_Left = (-1 * PWM_Left) + 220;
           if (PWM_Left > 255) PWM_Left = 255;
-          lcd.setCursor(15, 0);
-          lcd.print("*");
           SetPins_ToTurnLeft();
           delay(5);
         }
@@ -434,8 +372,6 @@ void Track_Perimeter_Wire_To_Dock()  {
         if (PWM_Right > 255) PWM_Right = 255;
         if (PWM_Right >= 0) {
           SetPins_ToGoForwards();
-          lcd.setCursor(15, 0);
-          lcd.print(" ");
         }
 
 
@@ -443,8 +379,6 @@ void Track_Perimeter_Wire_To_Dock()  {
           PWM_Right = (-1 * PWM_Right) + 220 ;
           if (PWM_Right > 255) PWM_Right = 255;
           if (PWM_Right >= 0) SetPins_ToTurnRight();
-          lcd.setCursor(15, 0);
-          lcd.print("*");
         }
 
         Motor_Action_Dynamic_PWM_Steering();
@@ -496,13 +430,6 @@ void Tracking_Restart_Blocked_Path() {
   delay(1000);
   Mower_Running = 0;
   Tracking_Wire = 0;
-  if (WIFI_Enabled == 1) Get_WIFI_Commands();                                   // TX and RX data from NodeMCU
-  delay(1000);
-
-  lcd.clear();
-  lcd.print("Wire Lost.");
-  lcd.setCursor(0, 1);
-  lcd.print("Recovering.....");                                 // Prints info to LCD display
   if (WIFI_Enabled == 1) Get_WIFI_Commands();                                   // TX and RX data from NodeMCU
   if (Mower_Parked != 1) {                                                                              // If Pause has been pressed dont carry on.
     SetPins_ToGoBackwards();

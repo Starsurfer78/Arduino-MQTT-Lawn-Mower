@@ -92,12 +92,7 @@ void Execute_Blynk_Command_To_Mower() {
       DPRINT(val_WIFI);
       DPRINT(F("Exit Dock| "));
       DPRINTLN(F("Zone 1"));
-      lcd.clear();
-      lcd.print(F("WIFI Start"));
-      lcd.setCursor(0, 1);
-      lcd.print(F("Exit Dock Z1"));
       delay(500);
-      lcd.clear();
       Exit_Zone = 1;
       Track_Wire_Itterations = Track_Wire_Zone_1_Cycles;
       Manouver_Exit_To_Zone_X();
@@ -110,13 +105,9 @@ void Execute_Blynk_Command_To_Mower() {
     DPRINT(F("WIFI Command:"));
     DPRINT(val_WIFI);
     DPRINTLN(F("|Quick Start"));
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(F("WIFI Start"));
     DPRINTLN(F("Quick Start"));
     if (Mower_Docked == 0) {
       Manouver_Start_Mower();
-      lcd.clear();
       if (TFT_Screen_Menu == 1) Send_Mower_Docked_Data();    // Send the Docked TX Data package to the mower.
     }
 
@@ -130,14 +121,9 @@ void Execute_Blynk_Command_To_Mower() {
     DPRINT(F("WIFI Command: "));
     DPRINT(val_WIFI);
     DPRINTLN(F("|Go To Dock"));
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(F("WIFI Go To Dock"));
-    Menu_Mode_Selection = 0;                                      // Releases the loop in the membrane button section.
     Motor_Action_Stop_Spin_Blades();
     Motor_Action_Stop_Motors();
     delay(1000);
-    lcd.clear();
     Manouver_Go_To_Charging_Station();
 
 
@@ -172,12 +158,7 @@ void Execute_Blynk_Command_To_Mower() {
     DPRINT(F("WIFI Command: "));
     DPRINT(val_WIFI);
     DPRINTLN(F("|Automatic Mode RANDOM"));
-    lcd.clear();
-    lcd.print("Auto Random");
-    lcd.setCursor(0, 1);
-    lcd.print("Pattern");
     delay(200);
-    lcd.clear();
     if (Mower_Running == 0) {
       Manouver_Park_The_Mower();
       Turn_On_Relay();
@@ -192,12 +173,7 @@ void Execute_Blynk_Command_To_Mower() {
     DPRINT(F("WIFI Command: "));
     DPRINT(val_WIFI);
     DPRINTLN(F("|Automatic Mode SPIRAL"));
-    lcd.clear();
-    lcd.print("Auto Spiral");
-    lcd.setCursor(0, 1);
-    lcd.print("Pattern");
     delay(200);
-    lcd.clear();
     if (Mower_Running == 0) {
       Manouver_Park_The_Mower();
       Turn_On_Relay();
@@ -213,12 +189,6 @@ void Execute_Blynk_Command_To_Mower() {
     DPRINT(F("WIFI Command: "));
     DPRINT(val_WIFI);
     DPRINTLN(F("|Automatic Mode PARALLEL"));
-    lcd.clear();
-    lcd.print("Auto Parallel");
-    lcd.setCursor(0, 1);
-    lcd.print("Pattern");
-    delay(200);
-    lcd.clear();
     if (Mower_Running == 0) {
       Manouver_Park_The_Mower();
       Turn_On_Relay();

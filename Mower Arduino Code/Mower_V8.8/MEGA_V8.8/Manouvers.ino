@@ -11,8 +11,6 @@ void Manouver_Mow_The_Grass() {
   DPRINT(F("Loop:"));
   DPRINT(Loop_Cycle_Mowing);
   DPRINT(F("|"));
-  lcd.setCursor(13, 1);
-  lcd.print(Loop_Cycle_Mowing);
   delay(1);
 
   if (Loop_Cycle_Mowing < 5  )  {
@@ -21,7 +19,6 @@ void Manouver_Mow_The_Grass() {
     if ((Compass_Activate == 1) && (Compass_Heading_Hold_Enabled == 1) && (GYRO_Enabled == 0) ) {
       DPRINT(F("C-Lock:OFF"));
       DPRINT(F("|"));
-      if (LCD_Screen_Keypad_Menu == 1)  Print_LCD_Mowing();
       Get_Compass_Reading();
       Motor_Action_Go_Mowing_Speed();
       Compass_Heading_Locked = 0;                           // Turn off the compass heading lock for the new cycles
@@ -31,7 +28,6 @@ void Manouver_Mow_The_Grass() {
     if (GYRO_Enabled == 1);
     DPRINT(F("G-Lock:OFF"));
     DPRINT(F("|"));
-    if (LCD_Screen_Keypad_Menu == 1)  Print_LCD_Mowing();
     Get_GYRO_Reading();
     Motor_Action_Go_Mowing_Speed();
     GYRO_Heading_Locked = 0;                           // Turn off the compass heading lock for the new cycles
@@ -50,7 +46,6 @@ void Manouver_Mow_The_Grass() {
       if ((Compass_Heading_Hold_Enabled == 0) && (GYRO_Enabled == 0)) {
         DPRINT(F("C-Lock:OFF"));
         DPRINT(F("|"));
-        if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Compass_Mowing();
         Motor_Action_Go_Mowing_Speed();
         Compass_Heading_Locked = 0;
       }
@@ -83,7 +78,6 @@ void Manouver_Mow_The_Grass() {
 
     if (Pattern_Mow == 1)  {
       Motor_Action_Go_Mowing_Speed();
-      if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Parallel();
       DPRINT("Parallel:ON");
       DPRINT(F("|"));
 
@@ -103,7 +97,6 @@ void Manouver_Mow_The_Grass() {
     // Sets up the variables so that a spiral mow pattern is activated.
     if (Pattern_Mow == 2)  {
       Compass_Heading_Locked = 0;                   // Compass Lock is switched off
-      if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Spiral();
       DPRINT("Spiral:ON");
       DPRINT(F("|"));
       Motor_Action_Go_Mowing_Speed();
@@ -119,18 +112,14 @@ void Manouver_Mow_The_Grass() {
     // Normal Random Mowing
     if (Pattern_Mow == 0) {
       if ((Compass_Heading_Locked == 0) && (GYRO_Enabled == 0)) {
-        lcd.setCursor(0, 1);
         DPRINT(F("C-Lock:OFF"));
         DPRINT(F("|"));
-        if (LCD_Screen_Keypad_Menu == 1) lcd.print("Mowing          ");
         Motor_Action_Go_Mowing_Speed();
         Compass_Steering_Status = 0;                                             // TFT Information
       }
       if ((GYRO_Heading_Locked == 0) && (GYRO_Enabled == 0)) {
-        lcd.setCursor(0, 1);
         DPRINT(F("G-Lock:OFF"));
         DPRINT(F("|"));
-        if (LCD_Screen_Keypad_Menu == 1) lcd.print("Mowing          ");
         Motor_Action_Go_Mowing_Speed();
         Compass_Steering_Status = 0;
       }
@@ -141,7 +130,6 @@ void Manouver_Mow_The_Grass() {
           Compass_Steering_Status = 1;
           Calculate_Compass_Wheel_Compensation();
           Motor_Action_Dynamic_PWM_Steering();              // Removes the full speed function if the mower is trying to hold to the compass heading.
-          if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Compass_Mowing();
           DPRINT(F("C-Lock:ON_"));
           DPRINT("|");
         }
@@ -153,7 +141,6 @@ void Manouver_Mow_The_Grass() {
           GYRO_Steering_Status = 1;
           Calculate_GYRO_Wheel_Compensation();
           Motor_Action_Dynamic_PWM_Steering();              // Removes the full speed function if the mower is trying to hold to the compass heading.
-          if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Compass_Mowing();
           DPRINT(F("G-Lock:ON_"));
           DPRINT("|");
         }
@@ -190,22 +177,14 @@ void Manouver_Mow_The_Grass() {
     Motor_Action_Stop_Spin_Blades();                    // Stop the blades from spinning
     Manouver_Turn_Around();                             // Turn around the mower
     Loop_Cycle_Mowing = 0;                              // Restes the loop cycle to start again.
-    lcd.clear();
   }
 }
-
-
-
-
-
 
 
 void Manouver_Find_Wire_Track()  {
 
 
   DPRINTLN(F("Find Wire Track Function Activated"));
-  lcd.clear();
-  lcd.print("Finding Wire...  ");
   Motor_Action_Stop_Spin_Blades();
   delay(5);
   Abort_Wire_Find = 0;
@@ -239,11 +218,6 @@ void Manouver_Find_Wire_Track()  {
         Motor_Action_Stop_Motors();                                                           // Stop all wheel motion
         delay(1000);
         SetPins_ToGoBackwards();                                                                // Set the mower to back up
-        delay(100);
-        lcd.clear();
-        lcd.print("Backwards Try...  ");
-        lcd.setCursor(0, 1);
-        lcd.print("Finding Wire  ");
         delay(100);
         cycle = 0;
 
@@ -281,19 +255,12 @@ void Manouver_Find_Wire_Track()  {
         delay(1000);
         SetPins_ToGoForwards();                                                                 // Set the motors to move the mower forwards
         delay(100);
-        lcd.clear();
-        lcd.print("Forward Try...  ");
-        lcd.setCursor(0, 1);
-        lcd.print("Finding Wire  ");
-        delay(100);
         cycle = 0;                                                                              // resets the cycles
 
         // Move the mower forwards until the wire is detected and the mower is then outside the wire
         while (( inside != false) && (No_Wire_Found_Fwd == 0) && (Mower_Parked == 0) ) {            // Move the mower forward until mower is outisde/ON the wire fence or 500 cycles have passed
           Loop_Cycle_Mowing = 111;                                                              // Displays 111 in the APP
           cycle = cycle + 1;
-          lcd.setCursor(0, 1);
-          lcd.print("Track -> Charge");
           Motor_Action_Go_Full_Speed();                                                         // Go full speed (in this case forwards)
           Check_Bumper();                                                                       // Check if the bumper is hit
           UpdateWireSensor();                                                                   // Read the wire sensor and see of the mower is now  or outside the wire
@@ -342,8 +309,6 @@ void Manouver_Find_Wire_Track()  {
 
   // Set pins to track home to charge.
   if ((Mower_Track_To_Charge == 1) && (Mower_Parked == 0)) {
-    lcd.setCursor(0, 1);
-    lcd.print("Track -> Charge");
     delay(1000);
     if (CW_Tracking_To_Charge == 1) {
       SetPins_ToTurnRight();                                                                // Track perimeter wire in a Clockwise Direction to the charging station
@@ -357,8 +322,6 @@ void Manouver_Find_Wire_Track()  {
 
   // Set pins to track to exit.
   if ((Mower_Track_To_Exit == 1) && (Mower_Parked == 0)) {
-    lcd.setCursor(0, 1);
-    lcd.print("Track -> Exit");
     delay(1000);
     if (CW_Tracking_To_Start == 1) {
       SetPins_ToTurnRight();                                                                // Track perimeter wire in a Clockwise Direction to the charging station
@@ -384,16 +347,11 @@ void Manouver_Find_Wire_Track()  {
   int Max_Spin_Attempts = 150;
   int Spin_Attempts = 0;
   int WIFI_Check_Up;
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Spin To Wire");
   // Spins the mower over the wire in the driection of tracking
   while (( inside == false)  && (Abort_Wire_Find == 0) && (No_Wire_Found_Fwd == 0) && (Mower_Parked == 0) && (Spin_Attempts < Max_Spin_Attempts )) {
     while (( inside != true) && (Spin_Attempts < Max_Spin_Attempts )) {                                                             // Do this loop until mower is back  the wire fence
       DPRINT(F("Spin Attempts"));
       DPRINT(Spin_Attempts);
-      lcd.setCursor(0, 1);
-      lcd.print(Spin_Attempts);
       Motor_Action_Go_Full_Speed();                                                         // Go full speed (in the case turning as set by the previous logic)
       UpdateWireSensor();                                                                   // Read the wire sensor and see of the mower is now  or outside the wire
       ADCMan.run();
@@ -411,22 +369,13 @@ void Manouver_Find_Wire_Track()  {
   Motor_Action_Stop_Motors();
   if ((Abort_Wire_Find == 0) && (Spin_Attempts < Max_Spin_Attempts )) {
     DPRINTLN(F("Track Wire Function Complete - ON WIRE??"));
-    lcd.clear();
-    lcd.print("Wire Found...");
     delay(2000);                                                                                // 2 second pause to check result
     SetPins_ToGoForwards();
-    delay(100);
-    lcd.clear();
-    lcd.setCursor(0, 1);
-    lcd.print("Track -> Charge");
   }
 
   // if an abort has been received or the mower is not spinning to the right diection on the the wire then park it.
   if ((Abort_Wire_Find == 1) || (Spin_Attempts >= Max_Spin_Attempts))  {
     DPRINTLN("Wire Find Aborted");
-    lcd.clear();
-    lcd.print("Wire Find ABORT!!");
-    delay(2000);
     Abort_Wire_Find = 0;
     SetPins_ToGoForwards();
     Manouver_Park_The_Mower();
@@ -555,7 +504,6 @@ void Manouver_Turn_Around() {
   Sonar_Hit_2_Total = 0;
   Sonar_Hit_3_Total = 0;
   Compass_Heading_Locked = 0;                                           // Reset Compass Heading Lock
-  if (LCD_Screen_Keypad_Menu == 1) lcd.clear();
   if (TFT_Screen_Menu == 1)        Send_Mower_Running_Data();           // Update TFT Screen
   DPRINTLN(F(""));
   DPRINTLN(F("Mower Turned Around"));
@@ -577,16 +525,12 @@ void Manouver_Turn_Around_Sonar() {
   Motor_Action_Stop_Motors();
 
   if ( distance1 < maxdistancesonar ||  distance2 < maxdistancesonar ) {
-    lcd.setCursor(0, 8);
-    lcd.print("Go Right -->       ");
     SetPins_ToTurnRight();
     Motor_Action_Turn_Speed();
     delay(Mower_Turn_Delay_Max);
   }
 
   if (distance3 < maxdistancesonar) {
-    lcd.setCursor(0, 8);
-    lcd.print("<-- Go Left      ");
     SetPins_ToTurnLeft();
     Motor_Action_Turn_Speed();
     delay(Mower_Turn_Delay_Max);
@@ -693,7 +637,6 @@ void Manouver_Dock_The_Mower() {
   Motor_Action_Stop_Motors();
   Motor_Action_Stop_Spin_Blades();
   Turn_Off_Relay();
-  Print_LCD_Info_Docked();
   Charge_Detected_MEGA = 0;
   //Setup Alarms
   Alarm_Timed_Mow_ON = 0;                                           // Turns off the 1 hr Alarm
@@ -742,7 +685,6 @@ void Manouver_Park_The_Mower() {
   Motor_Action_Stop_Motors();
   Motor_Action_Stop_Spin_Blades();
 
-  if (Mower_Parked == 0 ) lcd.clear();
   if ((Mower_Running == 1) &&  (TFT_Screen_Menu == 1)) {
     DPRINTLN(F("Sending TFT Running Data"));
     Mower_Parked          = 1;
@@ -980,10 +922,6 @@ void Manouver_Exit_To_Zone_X() {
 // 3 outside the wires ativates this function. Sonar and wire function is then used to re-find the wire.
 void Manouver_Outside_Wire_ReFind_Function() {
   Motor_Action_Stop_Spin_Blades();
-  lcd.clear();
-  lcd.print("Trying to find");
-  lcd.setCursor(0, 1);
-  lcd.print("Wire Again...");
   ADCMan.run();
   UpdateWireSensor();
   delay(20);
@@ -1039,10 +977,6 @@ void Manouver_Outside_Wire_ReFind_Function() {
   }
 
   DPRINTLN("Mower is now back inside the wire......?");
-  lcd.clear();
-  lcd.print("Mower now");
-  lcd.setCursor(0, 1);
-  lcd.print("Inside Wire?");
   Outside_Wire_Count = 0;
   //FindWireTrack();
 }

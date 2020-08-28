@@ -8,18 +8,11 @@ void Get_Compass_Reading() {
   // If the Compass is activated
   if (Compass_Activate == 1) {
 
-    // displays a star on the LCD to show compass is being used.
-    if (LCD_Screen_Keypad_Menu == 1) lcd.setCursor(7, 0);
-    if (LCD_Screen_Keypad_Menu == 1) lcd.print("*");
-
     // Gets the compass data depending on which method is selected
     if (Compass_Detected == 1) Get_DFRobot_HMC5883L_Reading();
     if (Compass_Detected == 2) Get_DFRobot_QMC5883_Reading();
     if (Compass_Detected == 3) Get_Manuel_QMC5883_Reading();
     if (Compass_Detected == 4) Get_QMC5883L_Reading();
-
-    if (LCD_Screen_Keypad_Menu == 1) lcd.setCursor(7, 0);
-    if (LCD_Screen_Keypad_Menu == 1) lcd.print("/");
 
     // Set declination angle. Find your location declination on: http://magnetic-declination.com/
     // (+) Positive or (-) for negative,
@@ -38,9 +31,6 @@ void Get_Compass_Reading() {
     DPRINT(F("Comp°:"));
     DPRINT(Compass_Heading_Degrees);
     DPRINT("|");
-    delay(5);
-    if (LCD_Screen_Keypad_Menu == 1) lcd.setCursor(7, 0);
-    if (LCD_Screen_Keypad_Menu == 1) lcd.print(" ");
     delay(100);
   }
 }
@@ -82,11 +72,8 @@ void Get_QMC5883L_Reading() {
 void Compass_Turn_Mower_To_Home_Direction() {
   //Stop the motors.
   Motor_Action_Stop_Motors;
-  delay(2000);
-  Print_LCD_Compass_Home();
   delay(1000);
   Compass_Target = Home_Wire_Compass_Heading;
-  lcd.clear();
   // Reverse the mower a little
   SetPins_ToGoBackwards();
   Motor_Action_Go_Full_Speed();
@@ -107,8 +94,6 @@ void Compass_Turn_Mower_To_Home_Direction() {
   Motor_Action_Stop_Motors();
   Get_Compass_Reading();
   delay(500);
-  lcd.clear();
-  lcd.print("Compass Set");
   Motor_Action_Stop_Motors();
   Get_Compass_Reading();
   delay(2000);
@@ -122,11 +107,6 @@ void Turn_To_Compass_Heading() {
   DPRINTLN("- - - - - - - - -");
   DPRINTLN(F("Compass Home 2 Activated"));
   delay(1000);
-
-  // Print info to LCD
-  lcd.setCursor(0, 0);
-  lcd.print("Target: ");
-  lcd.print(Compass_Target);
 
   // Print to Serial Monitor
   DPRINT("Compass Target : ");
@@ -176,14 +156,10 @@ void Turn_To_Compass_Heading() {
           DPRINTLN(Compass_Heading_Degrees - Compass_Last);
 
           Bad_Reading = Bad_Reading + 1;
-          lcd.setCursor(15, 1);
-          lcd.print("x");
           Get_Compass_Reading;
           delay(100);
         }
         else {
-          lcd.setCursor(15, 1);
-          lcd.print("o");
         }
 
       }
@@ -218,8 +194,6 @@ void Turn_To_Compass_Heading() {
       delay(100);
       Get_Compass_Reading;
       Motor_Action_Stop_Motors();
-      lcd.setCursor(0, 1);
-      lcd.print(Compass_Heading_Degrees);
 
 
       Attemps_Compass_Turn = Attemps_Compass_Turn + 1;
@@ -256,21 +230,12 @@ void Turn_To_Compass_Heading() {
         if (Compass_Heading_Degrees - Compass_Last > 50) {
           DPRINTLN("Bad Compass Reading");
           Bad_Reading = Bad_Reading + 1;
-          lcd.setCursor(15, 1);
-          lcd.print("x");
           Get_Compass_Reading;
           delay(100);
-        }
-        else {
-          lcd.setCursor(15, 1);
-          lcd.print("o");
         }
 
       }
       Compass_Last = Compass_Heading_Degrees;    // sotres the last good compass reading
-
-
-
       delay(100);
       DPRINT("Compass Heading : ");
       DPRINT(Compass_Heading_Degrees);
@@ -307,10 +272,6 @@ void Turn_To_Compass_Heading() {
   }
 
   if (Bad_Reading > 5)  {
-    lcd.clear();
-    lcd.print("Bad Compass Readings");
-    lcd.setCursor(0, 1);
-    lcd.print("Restarting");
     delay(1000);
     SetPins_ToTurnLeft();                                     // Calls the motor function turn Left
     Motor_Action_Turn_Speed();                                       // Sets the speed of the turning motion
@@ -328,15 +289,6 @@ void Turn_To_Compass_Heading() {
   }
 
 }
-
-
-void Display_Compass_Current_Heading_on_LCD() {
-  lcd.setCursor(5, 1);
-  lcd.print("    ");
-  lcd.print(Compass_Heading_Degrees);
-  delay(10);
-}
-
 
 
 void Calculate_Compass_Wheel_Compensation() {
@@ -376,9 +328,6 @@ void Calculate_Compass_Wheel_Compensation() {
     }
     Compass_Steering_Status = 2;
   }
-
-
-
 
 
   if (Compass_Error >= 0) {

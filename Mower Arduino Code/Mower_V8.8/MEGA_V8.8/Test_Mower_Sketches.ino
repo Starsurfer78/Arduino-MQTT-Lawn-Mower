@@ -23,19 +23,6 @@ void Test_Mower_Check_Wire()  {
   DPRINT((int)perimeter.getSmoothMagnitude(0));
   DPRINT(F("     qaulity: "));
   DPRINTLN((perimeter.getFilterQuality(0)));
-
-
-
-  lcd.setCursor(0, 0);
-  lcd.print("IN/Out:");
-  lcd.setCursor(8, 0);
-  lcd.print(perimeter.isInside(0));
-  lcd.setCursor(0, 1);
-  lcd.print("MAG:");
-  lcd.setCursor(8, 1);
-  lcd.print(perimeter.getMagnitude(0));
-
-
 }
 
 
@@ -43,18 +30,12 @@ void Test_Relay() {
 
   Turn_Off_Relay();
   DPRINTLN("Relay OFF");
-  lcd.print("Relay OFF");
   delay(1000);
-  lcd.clear();
   Turn_On_Relay();
   DPRINTLN("Relay ON");
-  lcd.print("Relay ON");
   delay(1000);
-  lcd.clear();
   Turn_Off_Relay();
   DPRINTLN("Relay OFF");
-  lcd.print("Relay OFF");
-
 }
 
 
@@ -82,157 +63,64 @@ void Test_Wheel_Motors() {
   Turn_On_Relay();
   delay(200);
   if (I == 1) {
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Drive Wheel");
-    lcd.setCursor(1, 0);
-    lcd.print("Test");
-    delay(1000);
-    lcd.clear();
-
-    lcd.print("Remove ALL");
-    lcd.setCursor(0, 1);
-    lcd.print("Blades!!!");
-    delay(1000);
-    lcd.clear();
-
-
-    lcd.print("<-- Turn Left");
     delay(500);
     SetPins_ToTurnLeft();
     Motor_Action_Go_Full_Speed();
     delay(2000);
     Motor_Action_Stop_Motors();
     delay(500);
-    lcd.clear();
-
-    lcd.print("Turn Right -->");
-    delay(500);
     SetPins_ToTurnRight();
     Motor_Action_Go_Full_Speed();
     delay(2000);
     Motor_Action_Stop_Motors();
     delay(500);
-    lcd.clear();
-
-    lcd.print("Forwards");
-    delay(500);
     SetPins_ToGoForwards();
     Motor_Action_Go_Full_Speed();
     delay(2000);
     Motor_Action_Stop_Motors();
-    delay(500);
-    lcd.clear();
-
-    lcd.print("Backwards");
     delay(500);
     SetPins_ToGoBackwards();
     Motor_Action_Go_Full_Speed();
     delay(2000);
     Motor_Action_Stop_Motors();
     delay(5000);
-    lcd.clear();
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Dynamic");
-    lcd.setCursor(0, 1);
     PWM_Left = 150;
     PWM_Right = 150;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 255;
     PWM_Right = 0;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 155;
     PWM_Right = 0;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 255;
     PWM_Right = 0;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Dynamic");
-    lcd.setCursor(0, 1);
     PWM_Left = 150;
     PWM_Right = 150;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 0;
     PWM_Right = 255;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 0;
     PWM_Right = 155;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
-
-    lcd.clear();
-    lcd.setCursor(0, 1);
     PWM_Left = 0;
     PWM_Right = 255;
-    lcd.print("L:");
-    lcd.print(PWM_Left);
-    lcd.print("  R:");
-    lcd.print(PWM_Right);
     SetPins_ToGoForwards();
     Motor_Action_Dynamic_PWM_Steering();
     delay(2000);
@@ -240,12 +128,6 @@ void Test_Wheel_Motors() {
 
     Motor_Action_Stop_Motors();
     delay(1000);
-
-    lcd.clear();
-    lcd.print("Test Finished");
-    delay(1000);
-    lcd.clear();
-
     I = 2;
   }
   Turn_Off_Relay();
@@ -259,44 +141,16 @@ void Test_Wheel_Motors() {
 void Test_Mower_Blade_Motor() {
   // Spin the blade motor for 7 seconds
   Turn_On_Relay();;
-  delay(200);
-  lcd.print("Blade Motor");
-  lcd.setCursor(0, 1);
-  lcd.print("Test..!!");
-  delay(1000);
-  lcd.clear();
-  lcd.print("Remove ALL");
-  lcd.setCursor(0, 1);
-  lcd.print("Blades!!!");
-  delay(4000);
-  lcd.clear();
-  delay(2000);
-  lcd.print("BLADE MOTOR");
   delay(500);
   DPRINTLN("Blades ON");
-  lcd.setCursor(0, 1);
-  lcd.print("ON ");
-  lcd.setCursor(6, 1);
-  lcd.print("PWM =");
-  lcd.print(PWM_Blade_Speed);
   Motor_Action_Spin_Blades();
   delay(7000);
-
-
   // Stop the blade motor spinning for 2 seconds
-  lcd.clear();
   DPRINTLN("Blades OFF");
-  lcd.print("BLADE MOTOR");
-  lcd.setCursor(0, 1);
-  lcd.print("OFF..  ");
   Motor_Action_Stop_Spin_Blades();
   delay(2000);
-  lcd.clear();
-  delay(500);
-
   Turn_Off_Relay();
   delay(200);
-
 }
 
 
@@ -369,23 +223,12 @@ int PingSonarY(int trigPinY, int echoPinY, int distanceY, long durationY, int so
   /*If sonar distance is less than maximum distance then an object is registered to avoid*/
   if (distanceY <= maxdistancesonar ) {
     //Prints that Sonar X has detected an object to the Mower LCD.
-    lcd.setCursor(LCDRow, LCDColumn);                //sets location for text to be written
-    lcd.print("X");
-    LCDColumn = LCDColumn + 1;
-    lcd.setCursor(LCDRow, LCDColumn);                //sets location for text to be written
-    lcd.print("   ");
-    lcd.setCursor(LCDRow, LCDColumn);
-    lcd.print(distanceY);
-    delay(10);
+
   }
 
   /*If sonar distance is greater than maximum distance then no object is registered to avoid*/
   if (distanceY > 100) {
     //Prints that the path of Sonar X is open.
-    LCDColumn = LCDColumn - 1;
-    lcd.setCursor(LCDRow, LCDColumn);                 //sets location for text to be written
-    lcd.print("_");
-    delay(10);
   }
 
   return distanceY;

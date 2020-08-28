@@ -42,7 +42,7 @@ void Setup_QMC5883L_Compass() {
   }
 }
 
-void Setup_Manuel_QMC5883_Compass_2() {
+void Setup_Manuel_QMC5883_Compass_2() { 
   if (Compass_Activate == 1) {
     Wire.begin();
     //Initialize Serial and I2C communications
@@ -87,13 +87,6 @@ void Setup_DFRobot_QMC5883_HMC5883L_Compass() {
 
     /*Setup Compass
     *************************************************************************/
-    if (LCD_Screen_Keypad_Menu == 1) {
-      lcd.clear();
-      lcd.print(F("Compass  "));
-      lcd.setCursor(0, 1);
-      lcd.print(F("Setup"));
-    }
-
     int Compass_Attempt = 0;
     int Compass_Found = 0;
 
@@ -106,11 +99,6 @@ void Setup_DFRobot_QMC5883_HMC5883L_Compass() {
     if (compass.isHMC()) {
       DPRINTLN(F("Initialize DF Robot HMC5883 Compass"));
       Compass_Detected = 1;                        // HMC5883
-      if (LCD_Screen_Keypad_Menu == 1) {
-        lcd.setCursor(6, 0);
-        lcd.print(F(": HMC5883"));
-        delay(500);
-      }
 
       //compass.setRange(HMC5883L_RANGE_1_3GA);
       //compass.setMeasurementMode(HMC5883L_CONTINOUS);
@@ -123,11 +111,6 @@ void Setup_DFRobot_QMC5883_HMC5883L_Compass() {
     else if (compass.isQMC()) {
       DPRINTLN(F("Initialising DF Robot QMC5883 Compass"));
       Compass_Detected = 2;                        // HMC5883
-      if (LCD_Screen_Keypad_Menu == 1) {
-        lcd.setCursor(6, 0);
-        lcd.print(F(": QMC5883"));
-        delay(500);
-      }
       compass.setRange(QMC5883_RANGE_2GA);
       compass.setMeasurementMode(QMC5883_CONTINOUS);
       compass.setDataRate(QMC5883_DATARATE_50HZ);
@@ -141,12 +124,6 @@ void Setup_DFRobot_QMC5883_HMC5883L_Compass() {
       Compass_Activate = 0;
       DPRINTLN("Compass Deactivated");
       delay(3000);
-    }
-    if (LCD_Screen_Keypad_Menu == 1) {
-      lcd.setCursor(0, 1);
-      lcd.print(F("Done!             "));
-      delay(500);
-      lcd.clear();
     }
     //Wire.endTransmission();
   }
@@ -244,21 +221,11 @@ void Setup_ADCMan() {
 
 void Setup_Check_Pattern_Mow() {
   if (Pattern_Mow == 1) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Pattern Mow");
-    lcd.setCursor(0, 1);
-    lcd.print("Parallel");
-    delay(1000);
-    lcd.clear();
+
+
   }
   if (Pattern_Mow == 2) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Pattern");
-    lcd.setCursor(0, 1);
-    lcd.print("Spirals");
-    delay(1000);
-    lcd.clear();
+
+
   }
 }

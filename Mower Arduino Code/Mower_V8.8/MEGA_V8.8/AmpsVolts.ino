@@ -38,7 +38,6 @@ void Check_if_Charging() {
     DPRINT(Charging);
     DPRINT(F("|"));
     Charge_Detected_MEGA = 1;
-    Print_Charging_LCD();
     DPRINT(F("MEGA = 1|"));
   }
   if (Charging == 0)  {                            // If the value recieved is equal to 1 or 0 as expected then print the value to the serial monitor
@@ -46,14 +45,12 @@ void Check_if_Charging() {
     DPRINT(Charging);
     DPRINT(F("|"));
     Charge_Detected_MEGA = 0;
-    Print_Charging_LCD();
   }
   if ((Charging != 4) && (Charging != 0)) {
     DPRINT(F("Charging:"));
     DPRINT(Charging);
     DPRINT(F("|"));
     Charge_Detected_MEGA = 0;
-    Print_Charging_LCD();
   }
 
 
@@ -75,12 +72,6 @@ void Check_if_Docked() {
     Motor_Action_Stop_Motors();
     DPRINTLN(F("Charging Current detected"));
     DPRINTLN(F("Mower Docked"));
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(F("Docked in"));
-    lcd.setCursor(0, 1);
-    lcd.print(F("Charging Station"));                                // Prints info to LCD display
-    delay(2000);
     Mower_Docked = 1;
     // Update the TFT Screen
     if (TFT_Screen_Menu == 1) {
@@ -90,7 +81,6 @@ void Check_if_Docked() {
       Go_To_Charging_Station = 0;
     }
     Manouver_Dock_The_Mower();                                    // Shuts down the Mower ready for charging and mowing again.
-    lcd.clear();
   }
   DPRINTLN("");
 }

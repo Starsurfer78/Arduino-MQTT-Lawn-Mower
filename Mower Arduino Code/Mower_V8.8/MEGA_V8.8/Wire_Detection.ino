@@ -22,7 +22,6 @@ void Check_Wire_In_Out() {
     if ( (perimeter.isInside(0)) == 0 )  {                            // Mower is OUTSIDE the wire
       Outside_Wire = 1;                                               // Outside wire variable is tuend on.
       if (Mower_Running == 1) Motor_Action_Stop_Motors();             // Stop immediatley the wheel motors
-      if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Wire();              // Update the LCD screem
       Outside_Wire_Count = Outside_Wire_Count + 1;                    // Count the number of times the mower is consecutiley outside the wire
       // If a certain number is reached its assumed thw mower is lost outside the wire.
     }
@@ -44,13 +43,6 @@ void Check_Wire_In_Out() {
     if  (Action_On_Over_Wire_Count_Max == 2) Manouver_Outside_Wire_ReFind_Function();     // re-find Garden using Sonar 1 and wire detect
 
     if  (Action_On_Over_Wire_Count_Max == 3) {     // try to locate the wire using wire find function
-      if (LCD_Screen_Keypad_Menu == 1) {
-        lcd.clear();
-        lcd.print("Wire Find");
-        lcd.setCursor(0, 1);
-        lcd.print("Special Function");
-      }
-      delay(2000);
       Outside_Wire_Count = 0;
       Specials_Find_Wire_Track();
       SetPins_ToGoBackwards();                                                              // Set the mower to back up
@@ -72,7 +64,6 @@ void Check_Wire_In_Out() {
       DPRINTLN("");
       if (Wire_Refind_Tries > 4) {
         Motor_Action_Stop_Motors();
-        lcd.clear();
         Mower_Error = 1;
         DPRINTLN("");
         DPRINTLN("Max refind tries exceeded - Parking the Mower");
@@ -103,13 +94,11 @@ void TestforBoundaryWire()  {
     if (   (MAG_Now < -50 ) || (MAG_Now > 50 )  ) {
       Wire_Detected = 1;                                            // Wire is detected
       Wire_Off = 0;                                                 // Resets the counter
-      if (LCD_Screen_Keypad_Menu == 1) Print_LCD_Wire_ON();
     }
 
     // If the MAG field is very low between these values we can assume the wire is off
     if ( (MAG_Now > -20 ) && (MAG_Now < 20 )  ) {
       Wire_Detected = 0;
-      if (LCD_Screen_Keypad_Menu == 1) Print_LCD_NO_Wire();
       Wire_Off = Wire_Off + 1;
 
       // If the mower is docked or Parked then the TFT screen just shows a wire off warning

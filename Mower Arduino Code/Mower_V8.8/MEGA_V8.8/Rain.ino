@@ -6,7 +6,6 @@ void Check_if_Raining_From_Nano() {
       DPRINT(F("Rain:"));
       DPRINT(Rain_Detected);
       DPRINT("|");
-      Print_Raining_LCD();
       if (Rain_Detected == 1) Rain_Hit_Detected = Rain_Hit_Detected + 1;
       if (Rain_Detected == 0) Rain_Hit_Detected = Rain_Hit_Detected - 1;
       if (Rain_Hit_Detected < 0) Rain_Hit_Detected = 0;
@@ -15,7 +14,6 @@ void Check_if_Raining_From_Nano() {
       DPRINT(F("Rain:"));
       DPRINT(Rain_Detected);
       DPRINT("|");
-      Print_Raining_LCD();
       Rain_Detected = 0;
       Rain_Hit_Detected = Rain_Hit_Detected + 1;
     }
@@ -24,7 +22,6 @@ void Check_if_Raining_From_Nano() {
     else {
       DPRINT(F("Rain:"));
       DPRINT("_|");
-      Print_Raining_LCD();
       Rain_Detected = 0;
     }
 
@@ -38,7 +35,6 @@ void Check_if_Raining_From_Nano() {
     DPRINTLN("");
     DPRINTLN("Rain detected");
     DPRINTLN("");
-    Print_Raining_LCD();
     delay(2000);
     Manouver_Go_To_Charging_Station();            // If the Mower is running then go to the charge station.
   }
