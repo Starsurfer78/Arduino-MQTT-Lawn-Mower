@@ -30,69 +30,172 @@ void Pattern_Mow_Spirals() {
 
       Get_Compass_Reading();  // keeps the compass active
 
-      if (Spiral_Mow == 1) analogWrite(ENBPin, PWM_MaxSpeed_LH);
-      if (Spiral_Mow == 2) analogWrite(ENAPin, PWM_MaxSpeed_RH);
+      if (Spiral_Mow == 1) {
+      analogWrite(MotorRight_Rpwm, 0);                                     // Motor 1
+      analogWrite(MotorRight_Lpwm, 0);
+      analogWrite(MotorLeft_Rpwm, 0);
+      analogWrite(MotorLeft_Lpwm, PWM_MaxSpeed_LH);
+      DPRINT(F("Spiral_Mow:Right|"));
+      }
+
+      if (Spiral_Mow == 2) {
+      analogWrite(MotorRight_Rpwm, 0);
+      analogWrite(MotorRight_Lpwm, PWM_MaxSpeed_RH);
+      analogWrite(MotorLeft_Rpwm, 0);
+      analogWrite(MotorLeft_Lpwm, 0);
+      DPRINT(F("Spiral_Mow:Left|"));
+      }
+
       if (Spiral_Mow == 3) {
-        analogWrite(ENAPin, PWM_MaxSpeed_RH);
-        analogWrite(ENBPin, PWM_MaxSpeed_LH);
+        analogWrite(MotorRight_Rpwm, PWM_MaxSpeed_RH);                                     // Motor 1
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_MaxSpeed_LH);                                     // Motor 2
+        analogWrite(MotorLeft_Lpwm, 0);
+        DPRINT(F("Spiral_Mow:No|"));
       }
 
       if (Spiral_Mow < 3) {
-
-
-      DPRINT(F("Wheel:CIRCLE|"));
-
+      DPRINT(F("Spiral_Mow:CIRCLE|"));
       if (Loop_Cycle_Mowing < End_Linking) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_MaxSpeed_RH);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_MaxSpeed_LH);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_MaxSpeed_RH);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);                                     // Motor 2
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+          analogWrite(MotorRight_Rpwm, 0);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, PWM_MaxSpeed_LH);                                     // Motor 2
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       //Inside Spiral
       if ((Loop_Cycle_Mowing >= End_Linking) && (Loop_Cycle_Mowing < End_Spiral_1)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_1);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_1);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_1);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_1);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Sprial Ring 2
       if ((Loop_Cycle_Mowing >= End_Spiral_1) && (Loop_Cycle_Mowing < End_Spiral_2)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_2);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_2);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_2);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
         }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_2);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
+      }
 
       // Sprial Ring 3
       if ((Loop_Cycle_Mowing >= End_Spiral_2) && (Loop_Cycle_Mowing < End_Spiral_3)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_3);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_3);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_3);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_3);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Sprial Ring 4
       if ((Loop_Cycle_Mowing >= End_Spiral_3) && (Loop_Cycle_Mowing < End_Spiral_4)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_4);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_4);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_4);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_4);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Sprial Ring 5
       if ((Loop_Cycle_Mowing >= End_Spiral_4) && (Loop_Cycle_Mowing < End_Spiral_5)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_5);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_5);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_5);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_5);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Sprial Ring 6
       if ((Loop_Cycle_Mowing >= End_Spiral_5) && (Loop_Cycle_Mowing < End_Spiral_6)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_6);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_6);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_6);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_6);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Sprial Ring 7
       if ((Loop_Cycle_Mowing >= End_Spiral_6) && (Loop_Cycle_Mowing < End_Spiral_7)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_7);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_7);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_7);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_7);
+        analogWrite(MotorLeft_Lpwm, 0);
+        }
         }
 
       // Mower moves away to new position
       if ((Loop_Cycle_Mowing >= End_Spiral_7) && (Loop_Cycle_Mowing < Max_Cycles_Spirals)) {
-        if (Spiral_Mow == 1) analogWrite(ENAPin, PWM_MaxSpeed_RH);
-        if (Spiral_Mow == 2) analogWrite(ENBPin, PWM_MaxSpeed_LH);
+        if (Spiral_Mow == 1) {
+          analogWrite(MotorRight_Rpwm, PWM_MaxSpeed_RH);
+          analogWrite(MotorRight_Lpwm, 0);
+          analogWrite(MotorLeft_Rpwm, 0);
+          analogWrite(MotorLeft_Lpwm, 0);
+        }
+        if (Spiral_Mow == 2) {
+        analogWrite(MotorRight_Rpwm, 0);
+        analogWrite(MotorRight_Lpwm, 0);
+        analogWrite(MotorLeft_Rpwm, PWM_MaxSpeed_LH);
+        analogWrite(MotorLeft_Lpwm, 0);
         }
       }
 
