@@ -92,7 +92,6 @@ MotorLeft_Lpwm - 6    pin 2 (LPWM) to Arduino pin 4(PWM)
 //Motor A
 #define MotorRight_Rpwm 3
 #define MotorRight_Lpwm 4
-
 //Motor B
 #define MotorLeft_Rpwm 5                // EN Pins need a digital pin with PWM
 #define MotorLeft_Lpwm 6                // IN Pins dont need digital PWM
@@ -101,6 +100,12 @@ MotorLeft_Lpwm - 6    pin 2 (LPWM) to Arduino pin 4(PWM)
 #define RPWM 8
 #define L_EN 9
 #define R_EN 10
+
+// Analog In pins
+#define batteryVoltagePin = A0;
+#define bladeCurrentPin = A1;
+#define leftDriveCurrentPin = A2;
+#define rightDriveCurrentPin = A3;
 
 //Relay Switch
 #define Relay_Motors 24         // be careful that you really use PIN24.  The order is sometimes labelled
