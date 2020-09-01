@@ -6,9 +6,20 @@ Webside with descriptions and Online Shop to buy Components: [ReP_AL Maker Shop]
 
 This Project is based on the: **Mower_V8.8 Code**
 
+!!The Code is untested use it at your own Risk!!
+
 **!! All my work falls under the GNU Public License !!**
 
 **Project Customization**
+Components required:
+2x Arduino Mega
+1x Nodemcu
+1x 3.5" TFT
+3X BTS7960 Motordriver
+3x ACS712 30A 
+3x Ultrasonic Modul HC-SR04
+1x LM2596S DC-DC Step down
+1x INA?? for Battery Power 
 
 This project adds some customization to ReP_AL-3D-Lawn-Mower:
 - Enable/Disable Debug Messages (in Progress)
