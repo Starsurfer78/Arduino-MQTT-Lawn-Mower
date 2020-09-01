@@ -1,19 +1,19 @@
 ReP_AL
 
-This is a customization of project: [ReP_AL-3D-Lawn-Mower](https://github.com/REPALphilread/ReP_AL-3D-Lawn-Mower)
+This is a customization of the Project: [ReP_AL-3D-Lawn-Mower](https://github.com/REPALphilread/ReP_AL-3D-Lawn-Mower)
 
 Webside with descriptions and Online Shop to buy Components: [ReP_AL Maker Shop](https://repalmakershop.com/)
 
-This Projec is based on the: **Mower_V8.8 Code**
+This Project is based on the: **Mower_V8.8 Code**
 
 **!! All my work falls under the GNU Public License !!**
 
 **Project Customization**
 
 This project adds some customization to ReP_AL-3D-Lawn-Mower:
-- Enable/Disable Debug Messages
-- Remove LCD Code (in Progress)
-- MQTT Support for Home Automation System (in Progess)
+- Enable/Disable Debug Messages (in Progress)
+- Remove LCD Code (ready)
+- MQTT Support for Home Automation System (in Progess, Code by Comperta)
 - 24V Support (in Progess)
 
 
